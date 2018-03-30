@@ -1,0 +1,337 @@
+/*
+SQLyog Ultimate v9.02 
+MySQL - 5.6.26 : Database - ttgenerator
+*********************************************************************
+*/
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`ttgenerator` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `ttgenerator`;
+
+/*Table structure for table `batches` */
+
+DROP TABLE IF EXISTS `batches`;
+
+CREATE TABLE `batches` (
+  `Batch_name` varchar(3) NOT NULL,
+  `section` int(1) NOT NULL,
+  PRIMARY KEY (`Batch_name`,`section`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `batches` */
+
+insert  into `batches`(`Batch_name`,`section`) values ('F',1),('F',2),('F',3),('S',1),('S',2),('S',3),('T',1),('T',2),('T',3);
+
+/*Table structure for table `faculty` */
+
+DROP TABLE IF EXISTS `faculty`;
+
+CREATE TABLE `faculty` (
+  `fac_code` varchar(10) NOT NULL,
+  `fac_name` varchar(30) NOT NULL,
+  `dept` char(3) NOT NULL,
+  PRIMARY KEY (`fac_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `faculty` */
+
+insert  into `faculty`(`fac_code`,`fac_name`,`dept`) values ('006','Dr.Rachna Bairagi','HU'),('APR','MR. ANIL PANWAR','CSE'),('AR','MR. ANKUR RATMELE','CSE'),('AS','MR. ANTARIKSHA SOMANI','CSE'),('AU','MR. ARVIND UPADHYAY','CSE'),('AV','MS. ANJALI VERMA','CSE'),('BS','MR. BARKHA SAHU','CSE'),('DC','MR. DHARMENDRA CHOUKSE','CSE'),('DS','MR. DEEPAK SHUKLA','CSE'),('JG','MR. JAYESH GANGARANDE','CSE'),('KB','MR. KAMAL BORANA','CSE'),('NB','MS. NISHA  BHALSE','CSE'),('NM','MR. NEERAJ MEHTA','CSE'),('NMR','MS. NITU MATHURIYA','CSE'),('NS','MR. NEERAJ SHRIVASTAVA','CSE'),('NT','DR. NAMRATA TAPASWI','CSE'),('NY','MS. NEHA YADAV','CSE'),('PG','DR. PRATIK GITE','CSE'),('PJ','MR. PRATIK JAIN','CSE'),('PN','MR. PRATEEK NAHAR','CSE'),('PP','MS. PURNIMA PANDEY','CSE'),('PPR','MR. PANKAJ PATERIYA','CSE'),('PV','MS. PRIYANKA VIJAYVERGIYA','CSE'),('SB','MR. SUNNY BAGGA','CSE'),('SD','MR. SUMIT DEVRAY','CSE'),('SG','MS. SHWETA GANGARANDE','CSE'),('SJ','MR. SOURABH JAIN','CSE'),('SN','MR. SUNIL NIMAWAT','CSE'),('SNV','DR. S N VERMA','CSE'),('SP','MR. SUDHIR KUMAR PATIDAR','CSE'),('SS','MS. SHRUTI SHARMA','CSE'),('VC','MR. VIJAY CHOUDHARY','CSE'),('VG','MS. VAISHALI GUPTA','CSE'),('VKG','MR. VED KUMAR GUPTA','CSE'),('YY','MR. YAGYAPAL YADAV','CSE');
+
+/*Table structure for table `faculty_assignment` */
+
+DROP TABLE IF EXISTS `faculty_assignment`;
+
+CREATE TABLE `faculty_assignment` (
+  `fac_code` varchar(10) NOT NULL,
+  `assigned_time` varchar(2) NOT NULL,
+  `assigned_sub` varchar(6) NOT NULL,
+  KEY `FK_subject` (`assigned_sub`),
+  KEY `FK_faculty_assignment` (`fac_code`),
+  CONSTRAINT `FK_faculty_assignment` FOREIGN KEY (`fac_code`) REFERENCES `faculty` (`fac_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_subject` FOREIGN KEY (`assigned_sub`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `faculty_assignment` */
+
+/*Table structure for table `friday` */
+
+DROP TABLE IF EXISTS `friday`;
+
+CREATE TABLE `friday` (
+  `Batch` char(3) DEFAULT NULL,
+  `section` int(1) DEFAULT NULL,
+  `fac_code` varchar(10) DEFAULT NULL,
+  `sub_code` varchar(20) DEFAULT NULL,
+  `matrix_value` int(1) DEFAULT NULL,
+  KEY `batch` (`Batch`,`section`),
+  KEY `fac_code` (`fac_code`),
+  KEY `sub_code` (`sub_code`),
+  KEY `matrix val` (`matrix_value`),
+  CONSTRAINT `batch_fri` FOREIGN KEY (`Batch`, `section`) REFERENCES `batches` (`Batch_name`, `section`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fac_code_fri` FOREIGN KEY (`fac_code`) REFERENCES `faculty` (`fac_code`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `matrix val_fri` FOREIGN KEY (`matrix_value`) REFERENCES `time_slots` (`matrix_value`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `sub_code_fri` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `friday` */
+
+insert  into `friday`(`Batch`,`section`,`fac_code`,`sub_code`,`matrix_value`) values ('F',1,'NM','HU-220',7),('F',1,'JG','CS-222',7),('F',1,'NS','CS-224',3),('F',1,'PV','CS-223',4),('F',1,'PP','CS-222',5),('F',1,'APR','CS-221',6);
+
+/*Table structure for table `lab` */
+
+DROP TABLE IF EXISTS `lab`;
+
+CREATE TABLE `lab` (
+  `Lab_no` int(3) NOT NULL,
+  `Lab_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`Lab_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `lab` */
+
+insert  into `lab`(`Lab_no`,`Lab_name`) values (107,'Cloud Computing Lab'),(108,'Computer Centre Lab'),(109,'DataBase Management '),(202,'Data Structure & Alg'),(203,'Networking Lab'),(204,'Programming Lab'),(205,'Computer Graphics an'),(206,'Project Lab'),(207,'Interactive Learning'),(304,'Humanities Dept.'),(305,'E.C Dept.');
+
+/*Table structure for table `lab_subjects` */
+
+DROP TABLE IF EXISTS `lab_subjects`;
+
+CREATE TABLE `lab_subjects` (
+  `Lab_No` int(3) NOT NULL DEFAULT '0',
+  `sub_code` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Lab_No`,`sub_code`),
+  KEY `lab_subjects_ibfk_2` (`sub_code`),
+  CONSTRAINT `lab_subjects_ibfk_1` FOREIGN KEY (`Lab_No`) REFERENCES `lab` (`Lab_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `lab_subjects_ibfk_2` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `lab_subjects` */
+
+insert  into `lab_subjects`(`Lab_No`,`sub_code`) values (305,'CS-221'),(305,'CS-222'),(202,'CS-223'),(108,'CS-228'),(304,'HU-220');
+
+/*Table structure for table `monday` */
+
+DROP TABLE IF EXISTS `monday`;
+
+CREATE TABLE `monday` (
+  `Batch` varchar(3) DEFAULT NULL,
+  `section` int(1) DEFAULT NULL,
+  `fac_code` varchar(10) DEFAULT NULL,
+  `sub_code` varchar(20) DEFAULT NULL,
+  `matrix_value` int(1) DEFAULT NULL,
+  KEY `batch` (`Batch`,`section`),
+  KEY `fac_code` (`fac_code`),
+  KEY `sub_code` (`sub_code`),
+  KEY `matrix val` (`matrix_value`),
+  CONSTRAINT `batch` FOREIGN KEY (`Batch`, `section`) REFERENCES `batches` (`Batch_name`, `section`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fac_code` FOREIGN KEY (`fac_code`) REFERENCES `faculty` (`fac_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `matrix val` FOREIGN KEY (`matrix_value`) REFERENCES `time_slots` (`matrix_value`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sub_code` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `monday` */
+
+insert  into `monday`(`Batch`,`section`,`fac_code`,`sub_code`,`matrix_value`) values ('F',1,'PG','CS-228',7),('F',1,'PP','MA-220',3),('F',1,'NS','CS-224',4),('F',1,'PV','CS-223',5),('F',1,'PP','CS-222',6),('F',1,'PJ','CS-223',7),('F',2,'PP','CS-222',1),('F',2,'SN','MA-220',2),('F',2,'PP','CS-222',3),('F',2,'SN','MA-220',4),('F',2,'PP','CS-222',5),('F',2,'SN','MA-220',6),('T',2,'SB','CS-223',1),('T',2,'YY','MA-220',2),('T',2,'SS','CS-221',3),('T',2,'SB','CS-223',4),('T',2,'YY','MA-220',5),('T',2,'SS','CS-221',6),('S',3,'PP','MA-220',1),('S',3,'YY','CS-223',2),('S',3,'PP','MA-220',3),('S',3,'YY','CS-223',4),('S',3,'PP','MA-220',5),('S',3,'YY','CS-223',6);
+
+/*Table structure for table `register` */
+
+DROP TABLE IF EXISTS `register`;
+
+CREATE TABLE `register` (
+  `username` varchar(225) NOT NULL,
+  `pwd` varchar(225) NOT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `register` */
+
+insert  into `register`(`username`,`pwd`) values ('Admin','admin'),('User','password');
+
+/*Table structure for table `sub_type` */
+
+DROP TABLE IF EXISTS `sub_type`;
+
+CREATE TABLE `sub_type` (
+  `sub_code` varchar(20) NOT NULL,
+  `type` varchar(15) NOT NULL,
+  `classes` int(2) NOT NULL,
+  PRIMARY KEY (`sub_code`,`type`),
+  CONSTRAINT `FK_sub_type` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `sub_type` */
+
+insert  into `sub_type`(`sub_code`,`type`,`classes`) values ('CS-221','Practical',2),('CS-221','Theory',4),('CS-222','Practical',2),('CS-222','Theory',4),('CS-223','Practical',2),('CS-223','Theory',4),('CS-224','Theory',4),('CS-228','Practical',2),('HU-220','Practical',2),('MA-220','Theory',4);
+
+/*Table structure for table `subjects` */
+
+DROP TABLE IF EXISTS `subjects`;
+
+CREATE TABLE `subjects` (
+  `sub_code` varchar(20) NOT NULL,
+  `sub_name` varchar(25) NOT NULL,
+  `semester` int(1) NOT NULL,
+  PRIMARY KEY (`sub_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `subjects` */
+
+insert  into `subjects`(`sub_code`,`sub_name`,`semester`) values ('CS-221','Electronic Devices & Circ',3),('CS-222','Digital Circuit & Design',3),('CS-223','Data Structure-2',3),('CS-224','Discrete Structures ',3),('CS-228','GD/SEMINAR',3),('HU-220','Communication Skills ',3),('MA-220','Mathematics-3',3);
+
+/*Table structure for table `thursday` */
+
+DROP TABLE IF EXISTS `thursday`;
+
+CREATE TABLE `thursday` (
+  `Batch` char(3) DEFAULT NULL,
+  `section` int(1) DEFAULT NULL,
+  `fac_code` varchar(10) DEFAULT NULL,
+  `sub_code` varchar(20) DEFAULT NULL,
+  `matrix_value` int(1) DEFAULT NULL,
+  KEY `batch` (`Batch`,`section`),
+  KEY `fac_code` (`fac_code`),
+  KEY `sub_code` (`sub_code`),
+  KEY `matrix val` (`matrix_value`),
+  CONSTRAINT `batch_thu` FOREIGN KEY (`Batch`, `section`) REFERENCES `batches` (`Batch_name`, `section`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fac_code_thu` FOREIGN KEY (`fac_code`) REFERENCES `faculty` (`fac_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `matrix val_thu` FOREIGN KEY (`matrix_value`) REFERENCES `time_slots` (`matrix_value`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sub_code_thu` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `thursday` */
+
+insert  into `thursday`(`Batch`,`section`,`fac_code`,`sub_code`,`matrix_value`) values ('F',1,'DC','CS-221',7),('F',1,'PV','CS-223',3),('F',1,'PP','CS-222',4),('F',1,'APR','CS-221',5),('F',1,'PP','MA-220',6);
+
+/*Table structure for table `time_slots` */
+
+DROP TABLE IF EXISTS `time_slots`;
+
+CREATE TABLE `time_slots` (
+  `matrix_value` int(1) NOT NULL,
+  `time_start` varchar(10) DEFAULT NULL,
+  `time_end` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`matrix_value`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `time_slots` */
+
+insert  into `time_slots`(`matrix_value`,`time_start`,`time_end`) values (1,'09:45','10:35'),(2,'10:35','11:25'),(3,'11:30','12:20'),(4,'12:20','01:10'),(5,'01:40','02:30'),(6,'02:30','03:20'),(7,'09:45','11:25'),(8,'11:30','01:10'),(9,'01:40','03:20');
+
+/*Table structure for table `tuesday` */
+
+DROP TABLE IF EXISTS `tuesday`;
+
+CREATE TABLE `tuesday` (
+  `Batch` char(3) DEFAULT NULL,
+  `section` int(1) DEFAULT NULL,
+  `fac_code` varchar(10) DEFAULT NULL,
+  `sub_code` varchar(20) DEFAULT NULL,
+  `matrix_value` int(1) DEFAULT NULL,
+  KEY `batch` (`Batch`,`section`),
+  KEY `fac_code` (`fac_code`),
+  KEY `sub_code` (`sub_code`),
+  KEY `matrix val` (`matrix_value`),
+  CONSTRAINT `batch_tue` FOREIGN KEY (`Batch`, `section`) REFERENCES `batches` (`Batch_name`, `section`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fac_code_tue` FOREIGN KEY (`fac_code`) REFERENCES `faculty` (`fac_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `matrix val_tue` FOREIGN KEY (`matrix_value`) REFERENCES `time_slots` (`matrix_value`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sub_code_tue` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tuesday` */
+
+insert  into `tuesday`(`Batch`,`section`,`fac_code`,`sub_code`,`matrix_value`) values ('F',1,'PJ','CS-223',7),('F',1,'APR','CS-221',3),('F',1,'PG','CS-228',7),('F',1,'PP','MA-220',4),('F',1,'NS','CS-224',5),('F',1,'PV','CS-223',6),('F',2,'PP','CS-222',1),('F',2,'SN','MA-220',2),('T',2,'SB','CS-223',1),('T',2,'YY','MA-220',2),('T',2,'SS','CS-221',3),('T',2,'SB','CS-223',4),('T',2,'YY','MA-220',5),('T',2,'SS','CS-221',6),('S',3,'PP','MA-220',1),('S',3,'YY','CS-223',2);
+
+/*Table structure for table `wednesday` */
+
+DROP TABLE IF EXISTS `wednesday`;
+
+CREATE TABLE `wednesday` (
+  `Batch` char(3) DEFAULT NULL,
+  `section` int(1) DEFAULT NULL,
+  `fac_code` varchar(10) DEFAULT NULL,
+  `sub_code` varchar(20) DEFAULT NULL,
+  `matrix_value` int(1) DEFAULT NULL,
+  KEY `batch` (`Batch`,`section`),
+  KEY `fac_code` (`fac_code`),
+  KEY `sub_code` (`sub_code`),
+  KEY `matrix val` (`matrix_value`),
+  CONSTRAINT `batch_wed` FOREIGN KEY (`Batch`, `section`) REFERENCES `batches` (`Batch_name`, `section`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fac_code_wed` FOREIGN KEY (`fac_code`) REFERENCES `faculty` (`fac_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `matrix val_wed` FOREIGN KEY (`matrix_value`) REFERENCES `time_slots` (`matrix_value`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sub_code_wed` FOREIGN KEY (`sub_code`) REFERENCES `subjects` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `wednesday` */
+
+insert  into `wednesday`(`Batch`,`section`,`fac_code`,`sub_code`,`matrix_value`) values ('F',1,'JG','CS-222',7),('F',1,'NM','HU-220',7),('F',1,'PP','CS-222',3),('F',1,'APR','CS-221',4),('F',1,'PP','MA-220',5),('F',1,'NS','CS-224',6);
+
+/* Procedure structure for procedure `fri_IP` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `fri_IP` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `fri_IP`(in Batch char(3), section int(1), fac_code varchar(10),sub_code varchar(20), matrix_value int(1))
+begin
+ insert into friday values(Batch, section, fac_code,sub_code, matrix_value);
+end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `Mon_IP` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `Mon_IP` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `Mon_IP`(in Batch VARchar(3), section int(1), fac_code varchar(10),sub_code varchar(20), matrix_value int(1))
+begin
+insert into monday values(Batch, section, fac_code,sub_code, matrix_value);
+end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `thu_IP` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `thu_IP` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `thu_IP`(in Batch char(3), section int(1), fac_code varchar(10),sub_code varchar(20), matrix_value int(1))
+begin
+insert into thursday values(Batch, section, fac_code,sub_code, matrix_value);
+end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `tue_IP` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `tue_IP` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `tue_IP`(in Batch char(3), section int(1), fac_code varchar(10),sub_code varchar(20), matrix_value int(1))
+begin
+insert into tuesday values(Batch, section, fac_code,sub_code, matrix_value);
+end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `wed_IP` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `wed_IP` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `wed_IP`(in Batch char(3), section int(1), fac_code varchar(10),sub_code varchar(20), matrix_value int(1))
+begin
+insert into wednesday values(Batch, section, fac_code,sub_code, matrix_value);
+end */$$
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
