@@ -1,0 +1,96 @@
+@CHARSET "ISO-8859-1";
+
+html, body {
+	min-height: 100%;
+	min-width: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background: url("../backgroundd.jpg");
+	background-size: cover;
+}
+
+.main-container {
+	margin-top: 17%;
+}
+
+#main {
+	height: 25em;
+}
+
+#welcome-head {
+	display: table-cell;
+	font-size: 5em;
+	font-family: 'Lato', sans-serif;
+	vertical-align: middle;
+	transition: all 0.6s ease-in-out;
+}
+
+#welcome-head:HOVER {
+	/* font-size: 5.5em; */
+	text-shadow: 4px 3px 7px white;
+	letter-spacing: 3px;
+}
+
+.btn-container {
+	text-align: center;
+}
+
+.btn {
+	width: 100%;
+	height: 2.2em;
+	border-radius: 0px;
+	background: rgba(0, 0, 0, 0.4);
+	color: #bfbfbf;
+	font-size: 2.5em;
+	outline: none !important;
+	transition: all 0.5s;
+}
+
+.btn:HOVER {
+	background: #2d2d2d;
+	color: white;
+}
+
+.btn-field {
+	width: 100%;
+	height: 2.2em;
+	border-radius: 0px;
+	padding-left: 12px;
+	border: none;
+	border-bottom: 2px solid black;
+	background: rgba(0, 0, 0, 0.4);
+	color: #bfbfbf;
+	font-size: 2.5em;
+	outline: none;
+	transition: all 0.5s;
+}
+
+::-webkit-input-placeholder {
+	color: #bfbfbf;
+}
+
+:-moz-placeholder {
+	color: #bfbfbf;
+	opacity: 1;
+}
+
+::-moz-placeholder {
+	color: #bfbfbf;
+	opacity: 1;
+}
+
+:-ms-input-placeholder {
+	color: #bfbfbf;
+}
+
+#logIn {
+	width: 100%;
+	height: 2.9em;
+	background: black;
+	border: 1px solid black;
+	color: white;
+	outline: none;
+	font-size: 1.5em;
+	transition: all 0.5s;
+}

@@ -1,0 +1,124 @@
+/**
+ * @author: Surya Deep Mishra
+ */
+@CHARSET "ISO-8859-1";
+
+html, body {
+	margin: 0;
+	padding: 0;
+	min-height: 80em;
+	background: url("../minimalizm-karandash-nadpis.jpg") no-repeat;
+	background-size: contain;
+	background-position: top;
+	overflow: hidden;
+}
+
+#createTT, #viewTT {
+	display: table;
+	height: 30em;
+	width: 30em;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.7);
+	cursor: pointer;
+	background: url("../icon.png") no-repeat;
+	background-position: center center;
+	background-size: cover;
+	transition: border-radius 0.35s, transform 0.5s, box-shadow 0.5s, filter 0.3s;
+}
+
+.blur {
+	filter: blur(5px);
+}
+
+#createTT:HOVER, #viewTT:HOVER {
+	transform: scale(1.3);
+	/* box-shadow: 0px 0px 10px 2px black; */
+}
+
+#close {
+	float: right;
+	font-family: 'consolas';
+	font-size: 3.5em;
+	margin-right: 0.3em;
+	color: white;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+#close:HOVER {
+	color: #ff0000;
+}
+
+.menu {
+	display: none;
+	position: absolute;
+	z-index: 333;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.menu-circle {
+	display: table !important;
+	border-radius: 50% !important;
+}
+
+.heads {
+	display: table-cell;
+	vertical-align: middle;
+	font-weight: bold;
+	color: #2d2d2d;
+}
+
+/* Create TT styles */
+#mainTT {
+	display: none;
+	transform: scale(0);
+	transition: transform 1s;
+}
+
+.lblTableHead {
+	margin: 10px;
+	color: #fff;
+}
+
+.lblClassSelect {
+	float: right;
+	font-size: 1.37em;
+	line-height: 2em;
+}
+
+select {
+	margin: 0;
+	padding: 0;
+	padding-left: 4px;
+	width: 100%;
+	height: 100%;
+	border: 1px solid black;
+}
+
+/*Menu styles*/
+#menu {
+	display: none;
+	position: absolute;
+	top: 0.3em;
+	width: 5em;
+	height: 5em;
+	background:
+		url("http://www.haotu.net/up/3964/256/34-Menu,-three-horizontal-parallel-lines,-IOS-7-interface-symbol.png")
+		no-repeat;
+	background-size: cover;
+	cursor: pointer;
+}
+
+/* Select Entries*/
+#selectEntries {
+	margin: 0;
+	padding: 0;
+	padding-right: 30px;
+}
+
+.field-container {
+	height: 2.6em;
+	padding: 0;
+}
